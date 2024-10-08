@@ -7,7 +7,7 @@ Created on Sun Jun  3 19:06:14 2018
 import numpy as np
 from resources.mappings import *
 import pandas as pd
-from fancyimpute import MICE as MICE
+from fancyimpute import IterativeImputer as MICE
 from sklearn import preprocessing
 from functools import reduce
 
@@ -37,7 +37,7 @@ def get_relevant_admission_service(hadm_id, services_df):
         return (hadm_id, specialised_service[0])
     if general_medicine_service:
         return (hadm_id, general_medicine_service[0])
-    
+
 def group_marital_status(marital_status_df):
 
     marital_status_df['marital_status'] = marital_status_df['marital_status'].map(MARITAL_STATUS_GROUPS);
@@ -61,7 +61,7 @@ def convert_surgery_flag_to_category(flag):
         return 'NARROW';
     else:
         return 'NO SURGERY';
-    
+
 def get_admission_number(admissions):
 
     already_admitted_subjects = [];
@@ -123,7 +123,7 @@ def group_diag_icd9_code(icd9_code):
         return 'external causes of injury';
     if 'V' in icd9_code: 
         return 'supplementary classification of factors influencing health status';    
-    
+
 def calculate_imputation_error(feature, numerical_data, numerical_features):
     numerical_data = numerical_data.copy(deep=True);
     feature_data = numerical_data[feature][0:200].copy().reset_index(drop = True);
@@ -172,7 +172,7 @@ def prepare_numerical_features(numerical_features):
     scaled_numerical_features.index = numerical_features.index;
     
     return scaled_numerical_features;
-#Auxiliary function to convert dataframes to markdown for exporting
+# Auxiliary function to convert dataframes to markdown for exporting
 def df_to_markdown(df, float_format='%.2g'):
     from os import linesep
     return linesep.join([

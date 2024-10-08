@@ -22,7 +22,7 @@ class PatientOutcomes():
     
     def get_categorical_outcomes(self):
         
-        mortality        = self._get_mortality();
+        mortality        = self.get_mortality();
         
         mortality.set_index('hadm_id', drop = True, inplace = True);
         return mortality;
